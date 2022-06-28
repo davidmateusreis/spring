@@ -1,14 +1,19 @@
 package com.david.biblioteca.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -46,7 +51,14 @@ public class Usuario {
 	@Size(min = 4, message = "O login deve ter no mínimo 4 caracteres")
 	private String login;
 	
-	private boolean ativo;	
+	private boolean ativo;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="usuario_papel",
+			   joinColumns = @JoinColumn(name = "usuario_id"),
+			   inverseJoinColumns = @JoinColumn(name = "papel_id"))
+
+	private List<Papel> papeis;
 	
 	public Long getId() {
 		return id;
@@ -95,6 +107,12 @@ public class Usuario {
 	}
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	public List<Papel> getPapeis() {
+		return papeis;
+	}
+	public void setPapeis(List<Papel> papeis) {
+		this.papeis = papeis;
 	}
 
 }
