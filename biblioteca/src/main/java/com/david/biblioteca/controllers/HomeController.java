@@ -12,4 +12,9 @@ public class HomeController {
         model.addAttribute("msgBemVindo", "Bem-vindo à Biblioteca");
         return "publica-index";
     }
+
+    @RequestMapping("/login") 
+	public String login() {
+		return "login";
+	}
 }
